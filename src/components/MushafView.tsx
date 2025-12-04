@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useMemo, useCallback } from 'react';
-import { Ayah, SurahDetail } from '../types';
+import { Ayah } from '../types';
 import { PlayIcon, PauseIcon, SparklesIcon, BookIcon, SunIcon, MoonIcon, ArrowRightIcon, BookmarkIcon, BookmarkSolidIcon, XMarkIcon } from './Icons';
 import { getAyahExplanation } from '../services/geminiService';
 import { useQuranStore, useSettingsStore, useUIStore } from '../store';
@@ -137,7 +137,7 @@ const QuranPage = React.memo(({
 
 const MushafView: React.FC = () => {
   // Use Stores
-  const { loadedSurahs: surahs, loadNextSurah, initialPageToLoad, toggleBookmark, bookmarks, clearReader, isLoading } = useQuranStore();
+  const { loadedSurahs: surahs, loadNextSurah, initialPageToLoad, toggleBookmark, bookmarks, clearReader } = useQuranStore();
   const { fontSize, fontType, isDarkMode, toggleDarkMode } = useSettingsStore();
   const { isMobile, openModal } = useUIStore();
 
@@ -204,7 +204,7 @@ const MushafView: React.FC = () => {
   const audioContextRef = useRef<AudioContext | null>(null); // For Safari Unlock
 
   // Interaction State
-  const [hoveredAyah, setHoveredAyah] = useState<number | null>(null);
+  const [setHoveredAyah] = useState<number | null>(null); // Kept unused setter structure to minimize diff or remove if completely unused
   const [popoverContent, setPopoverContent] = useState<string | null>(null);
   const [popoverPosition, setPopoverPosition] = useState<{x: number, y: number} | null>(null);
   
@@ -298,18 +298,6 @@ const MushafView: React.FC = () => {
       setTouchStart(null);
       setTouchEnd(null);
   };
-
-  // --- Audio Logic ---
-  const stopAudio = useCallback(() => {
-      if (currentAudioRef.current) {
-          currentAudioRef.current.pause();
-          currentAudioRef.current = null;
-      }
-      if (nextAudioRef.current) {
-          nextAudioRef.current = null;
-      }
-      setIsPlaying(false);
-  }, []);
 
   const preloadNextAyah = useCallback((surahNum: number, ayahNum: number) => {
       const currentSurah = surahsRef.current.find(s => s.number === surahNum);
@@ -549,7 +537,7 @@ const MushafView: React.FC = () => {
                         playingAyahKey={playingState ? `${playingState.surah}:${playingState.ayah}` : null}
                         onAyahPlay={playAyah}
                         onAyahTafsir={handleAyahTafsir}
-                        setHoveredAyah={setHoveredAyah}
+                        setHoveredAyah={() => {}} // Pass dummy setter if needed or refactor logic
                         isLeftPage={false}
                         isSingleView={isMobile}
                         fontSize={fontSize}
@@ -579,7 +567,7 @@ const MushafView: React.FC = () => {
                              playingAyahKey={playingState ? `${playingState.surah}:${playingState.ayah}` : null}
                              onAyahPlay={playAyah}
                              onAyahTafsir={handleAyahTafsir}
-                             setHoveredAyah={setHoveredAyah}
+                             setHoveredAyah={() => {}} 
                              isLeftPage={true}
                              isSingleView={false}
                              fontSize={fontSize}
