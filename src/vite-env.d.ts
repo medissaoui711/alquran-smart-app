@@ -1,9 +1,9 @@
-export {};
+// Manually declare types since vite/client is missing
+declare module "*.css";
 
-declare global {
-  namespace NodeJS {
-    interface ProcessEnv {
-      API_KEY?: string;
-    }
+declare const process: {
+  env: {
+    [key: string]: string | undefined;
+    API_KEY: string;
   }
-}
+};
