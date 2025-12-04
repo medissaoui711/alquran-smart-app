@@ -1,9 +1,11 @@
 import { GoogleGenAI } from "@google/genai";
 
 const getClient = () => {
-  const apiKey = import.meta.env.VITE_API_KEY;
+  // Use the provided API key as a fallback if the environment variable is not set
+  const apiKey = import.meta.env.VITE_API_KEY || "AIzaSyBc5Ulu-mU7Z2jHK52rEpBzu9I7mQjtB94";
+  
   if (!apiKey) {
-    console.warn("VITE_API_KEY is not set.");
+    console.warn("API_KEY is not set.");
     return null;
   }
   return new GoogleGenAI({ apiKey });
