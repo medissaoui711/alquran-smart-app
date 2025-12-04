@@ -1,9 +1,11 @@
 // Manually declare types since vite/client is missing
 declare module "*.css";
 
-declare const process: {
-  env: {
-    [key: string]: string | undefined;
-    API_KEY: string;
-  }
-};
+interface ImportMetaEnv {
+  readonly VITE_API_KEY: string;
+  [key: string]: string | boolean | undefined;
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv;
+}
