@@ -204,7 +204,6 @@ const MushafView: React.FC = () => {
   const audioContextRef = useRef<AudioContext | null>(null); // For Safari Unlock
 
   // Interaction State
-  const [setHoveredAyah] = useState<number | null>(null); // Kept unused setter structure to minimize diff or remove if completely unused
   const [popoverContent, setPopoverContent] = useState<string | null>(null);
   const [popoverPosition, setPopoverPosition] = useState<{x: number, y: number} | null>(null);
   
@@ -537,7 +536,7 @@ const MushafView: React.FC = () => {
                         playingAyahKey={playingState ? `${playingState.surah}:${playingState.ayah}` : null}
                         onAyahPlay={playAyah}
                         onAyahTafsir={handleAyahTafsir}
-                        setHoveredAyah={() => {}} // Pass dummy setter if needed or refactor logic
+                        setHoveredAyah={() => {}} 
                         isLeftPage={false}
                         isSingleView={isMobile}
                         fontSize={fontSize}

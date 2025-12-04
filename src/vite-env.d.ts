@@ -1,3 +1,9 @@
-// Removed conflicting declarations to fix build errors.
-// - vite/client type definition was missing.
-// - process variable was being redeclared.
+export {};
+
+declare global {
+  namespace NodeJS {
+    interface ProcessEnv {
+      API_KEY?: string;
+    }
+  }
+}
